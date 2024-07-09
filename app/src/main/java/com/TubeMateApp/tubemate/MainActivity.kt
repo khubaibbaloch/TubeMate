@@ -15,6 +15,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -37,6 +38,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+          //  val currentTheme = viewModel.currentTheme.collectAsState()
+            //TubeMateThemes(currentTheme.value.toInt(), this@MainActivity) {
             TubeMateThemes(2, this@MainActivity) {
                 val navController = rememberNavController()
                 RootNavGraph(navController = navController, viewModel = viewModel)

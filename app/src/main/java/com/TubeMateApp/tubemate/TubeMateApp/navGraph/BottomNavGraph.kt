@@ -8,10 +8,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.TubeMateApp.tubemate.TubeMateApp.MainViewModel.TubeMateViewModel
+import com.TubeMateApp.tubemate.TubeMateApp.ui.AboutUsScreen.AboutUsScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.FacebookScreen.FacebookScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.HistoryScreen.HistoryScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.HomeScreen.HomeScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.InstagramScreen.InstagramScreen
+import com.TubeMateApp.tubemate.TubeMateApp.ui.PrivacyPolicyScreen.PrivacyPolicyScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.SettingScreen.SettingScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.WhatsappScreen.WhatsAppScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.YouTubeScreen.YouTubeScreen
@@ -19,7 +21,7 @@ import com.WalkMateApp.walkmate.WalkMateApp.navGraph.BottomNavScreenRoutes
 
 @Composable
 fun BottomNavGraph(navController: NavHostController,viewModel: TubeMateViewModel){
-    NavHost(navController = navController, startDestination = BottomNavScreenRoutes.FacebookScreen.route,
+    NavHost(navController = navController, startDestination = BottomNavScreenRoutes.AboutUsScreen.route,
         enterTransition = {
             fadeIn(animationSpec = tween(200))
         },
@@ -40,7 +42,7 @@ fun BottomNavGraph(navController: NavHostController,viewModel: TubeMateViewModel
             HistoryScreen(navController,viewModel)
         }
         composable(BottomNavScreenRoutes.SettingScreen.route) {
-            SettingScreen(navController)
+            SettingScreen(navController,viewModel)
         }
         composable(BottomNavScreenRoutes.InstagramScreen.route) {
             InstagramScreen(navController,viewModel)
@@ -53,6 +55,12 @@ fun BottomNavGraph(navController: NavHostController,viewModel: TubeMateViewModel
         }
         composable(BottomNavScreenRoutes.YouTubeScreen.route) {
             YouTubeScreen(navController,viewModel)
+        }
+        composable(BottomNavScreenRoutes.PrivacyPolicyScreen.route) {
+            PrivacyPolicyScreen(navController)
+        }
+        composable(BottomNavScreenRoutes.AboutUsScreen.route) {
+            AboutUsScreen(navController)
         }
     }
 }

@@ -70,6 +70,10 @@ class TubeMateViewModel @Inject constructor(
     private val _mediaFiles = MutableStateFlow<List<MediaFile>>(emptyList())
     val mediaFiles: StateFlow<List<MediaFile>> = _mediaFiles
 
+
+    private val _currentTheme = MutableStateFlow("")
+    val currentTheme: StateFlow<String> = _currentTheme
+
     //Instagram Section
 
     private val _isInstagramPostFounded = MutableStateFlow<Boolean>(false)
@@ -105,6 +109,7 @@ class TubeMateViewModel @Inject constructor(
             Python.start(AndroidPlatform(context))
         }
         _uriPermissionGranted.value = sharedPreferencesHelper.getBoolean("uri_permission_granted")
+        _currentTheme.value = getTheme(context)
     }
 
 
@@ -148,6 +153,16 @@ class TubeMateViewModel @Inject constructor(
         }
 
         return mediaFiles
+    }
+
+    fun getTheme(context: Context): String {
+        val preferences = context.getSharedPreferences("TubeMate_prefs", Context.MODE_PRIVATE)
+        return preferences.getString("newTheme", "1") ?: "1"
+    }
+    fun updateTheme(context: Context, newTheme: String) {
+        val preferences = context.getSharedPreferences("TubeMate_prefs", Context.MODE_PRIVATE)
+        preferences.edit().putString("newTheme", newTheme).apply()
+        _currentTheme.value = newTheme
     }
 
 

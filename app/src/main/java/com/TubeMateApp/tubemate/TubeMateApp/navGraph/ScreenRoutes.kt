@@ -10,6 +10,8 @@ sealed class BottomNavScreenRoutes(val route: String) {
     data object WhatsAppScreen : BottomNavScreenRoutes("WhatsAppScreenRoute")
     data object FacebookScreen : BottomNavScreenRoutes("FacebookScreenRoute")
     data object YouTubeScreen : BottomNavScreenRoutes("YouTubeScreenRoute")
+    data object PrivacyPolicyScreen : BottomNavScreenRoutes("PrivacyPolicyScreenRoute")
+    data object AboutUsScreen : BottomNavScreenRoutes("AboutUsScreenRoute")
 }
 
 sealed class ScreenRoutes(val route: String) {
