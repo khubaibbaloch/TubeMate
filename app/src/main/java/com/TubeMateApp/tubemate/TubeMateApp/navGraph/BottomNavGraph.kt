@@ -21,7 +21,7 @@ import com.WalkMateApp.walkmate.WalkMateApp.navGraph.BottomNavScreenRoutes
 
 @Composable
 fun BottomNavGraph(navController: NavHostController,viewModel: TubeMateViewModel){
-    NavHost(navController = navController, startDestination = BottomNavScreenRoutes.AboutUsScreen.route,
+    NavHost(navController = navController, startDestination = BottomNavScreenRoutes.HomeScreen.route,
         enterTransition = {
             fadeIn(animationSpec = tween(200))
         },

@@ -97,7 +97,7 @@ fun SettingScreen(navController: NavController,viewModel: TubeMateViewModel) {
                     modifier = Modifier
                         .height(50.dp)
                         .fillMaxWidth()
-                        .clickable {  }
+                        .clickable { navController.navigate(BottomNavScreenRoutes.PrivacyPolicyScreen.route) }
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
@@ -113,7 +113,7 @@ fun SettingScreen(navController: NavController,viewModel: TubeMateViewModel) {
                     modifier = Modifier
                         .height(50.dp)
                         .fillMaxWidth()
-                        .clickable {  }
+                        .clickable {navController.navigate(BottomNavScreenRoutes.AboutUsScreen.route)}
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically

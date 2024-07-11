@@ -24,6 +24,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.Facebbok.FacebookDownloadItems
 import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.History.MediaFile
 import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.Instagram.InstagramDownloadItem
 import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.TubeMate.SharedPreferencesHelper
@@ -87,6 +88,14 @@ class TubeMateViewModel @Inject constructor(
     val uriPermissionGranted: StateFlow<Boolean> get() = _uriPermissionGranted
 
 
+    //Facebook Section
+    private val _isFacebookVideoFounded = MutableStateFlow<Boolean>(false)
+    val isFacebookVideoFounded: StateFlow<Boolean> get() = _isFacebookVideoFounded
+
+    private val _FacebookDownloadItems = MutableStateFlow<List<FacebookDownloadItems>>(emptyList())
+    val FacebookDownloadItems: StateFlow<List<FacebookDownloadItems>> = _FacebookDownloadItems
+
+
     //YouTube Section
     private val _isYouTubeVideoFounded = MutableStateFlow<Boolean>(false)
     val isYouTubeVideoFounded: StateFlow<Boolean> get() = _isYouTubeVideoFounded
@@ -141,7 +150,8 @@ class TubeMateViewModel @Inject constructor(
         val mediaFiles = mutableListOf<MediaFile>()
 
         // Specify the directory to log data from
-        val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val directory =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val tubeMateDirectory = File(directory, "TubeMate")
 
         // Check if the directory exists and is a directory
@@ -159,12 +169,12 @@ class TubeMateViewModel @Inject constructor(
         val preferences = context.getSharedPreferences("TubeMate_prefs", Context.MODE_PRIVATE)
         return preferences.getString("newTheme", "1") ?: "1"
     }
+
     fun updateTheme(context: Context, newTheme: String) {
         val preferences = context.getSharedPreferences("TubeMate_prefs", Context.MODE_PRIVATE)
         preferences.edit().putString("newTheme", newTheme).apply()
         _currentTheme.value = newTheme
     }
-
 
 
     //Instagram Section
@@ -401,7 +411,8 @@ class TubeMateViewModel @Inject constructor(
     fun copyFileToDownloads(context: Context, uri: Uri, fileName: String): Boolean {
         val downloadsDir =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val directory =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val tubeMateDirectory = File(directory, "TubeMate")
         val destinationPath = File(tubeMateDirectory, fileName)
 
@@ -448,7 +459,8 @@ class TubeMateViewModel @Inject constructor(
             else -> null
         }
     }
-    fun  getExtensionTypes (context: Context, uri: Uri): String?{
+
+    fun getExtensionTypes(context: Context, uri: Uri): String? {
         val contentResolver = context.contentResolver
         val mimeType = contentResolver.getType(uri)
         return when (mimeType) {
@@ -460,8 +472,8 @@ class TubeMateViewModel @Inject constructor(
     }
 
     // Facebook Section
-
     fun fetchFacebookInfo(context: Context, videoUrl: String) {
+        _isFacebookVideoFounded.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val getVideoInfo = python.getModule("FacebookScraper")
@@ -470,209 +482,129 @@ class TubeMateViewModel @Inject constructor(
                     val videoUrl = videoInfo.callAttr("get", "video_url").toString()
                     val audioUrl = videoInfo.callAttr("get", "audio_url").toString()
 
-                    //val listUrls = listOf(videoUrl,audioUrl)
-                    // downloadVideo(listUrls,"2","1",1)
-                    // Download video and audio files
-                    val videoFile = downloadFile(context, videoUrl, "video.mp4")
-                    val audioFile = downloadFile(context, audioUrl, "audio.aac")
 
-                    if (videoFile != null && audioFile != null) {
-                        // Combine video and audio using FFmpeg
-                        val outputFilePath = combineVideoAndAudio(context, videoFile, audioFile)
-                        withContext(Dispatchers.Main) {
-                            Log.d("TAG", "Combined video path: $outputFilePath")
-                            // Handle success, e.g., update UI with combined video path
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            Log.e("TAG", "Failed to download video or audio")
-                            // Handle failure to download video or audio
-                        }
+                    withContext(Dispatchers.Main) {
+                        Log.e("TAG", "videoUrl $videoUrl")
+                        Log.e("TAG", "audioUrl $audioUrl")
+
+                        val videoUrlList = listOf(videoUrl, audioUrl)
+
+                        // using youtube download logic to download facebook video
+                        downloadFacebookVideo(
+                            videoUrls = videoUrlList,
+                            title = "Facebook_video",
+                            thumbnail = videoUrl,
+                            isYouTubeVideo = true,
+                            isYoutubeAudio = false
+                        )
+                        _isFacebookVideoFounded.value = false
                     }
+
+
                 } else {
                     withContext(Dispatchers.Main) {
                         Log.e("TAG", "Failed to retrieve video information")
-                        // Handle failure to retrieve video information
+                        Toast.makeText(context,"Failed to retrieve video information",Toast.LENGTH_SHORT).show()
+                        _isFacebookVideoFounded.value = false
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.e("TAG", "Error fetching video information: ${e.message}")
+                    Toast.makeText(context,"Try again",Toast.LENGTH_SHORT).show()
+                    _isFacebookVideoFounded.value = false
                     // Handle error fetching video information
                 }
             }
         }
     }
 
-    // Function to download a file and return its File object
-    suspend fun downloadFile(context: Context, fileUrl: String, fileName: String): File? {
-        return withContext(Dispatchers.IO) {
+    fun downloadFacebookVideo(
+        videoUrls: List<String>,
+        title: String,
+        thumbnail: String,
+        isYouTubeVideo: Boolean,
+        isYoutubeAudio: Boolean,
+    ) {
+        viewModelScope.launch {
             try {
-                val url = URL(fileUrl)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.connectTimeout = 15000
-                connection.readTimeout = 15000
-                connection.requestMethod = "GET"
-                connection.doInput = true
-                connection.connect()
-
-                val inputStream = connection.inputStream
-                val file = File(context.filesDir, fileName)
-                val outputStream = FileOutputStream(file)
-                val buffer = ByteArray(1024)
-                var len: Int
-                while (inputStream.read(buffer).also { len = it } != -1) {
-                    outputStream.write(buffer, 0, len)
-                }
-                outputStream.flush()
-                outputStream.close()
-                inputStream.close()
-                file
-            } catch (e: IOException) {
-                Log.e("TAG", "Error downloading file: ${e.message}")
-                null
+                val downloadIds = repository.downloadFiles(
+                    videoUrls,
+                    isYouTubeVideo,
+                    isYoutubeAudio
+                )
+                Log.d("TAG", "Download started with ids=$downloadIds")
+                addFacebookDownloadItem(title, thumbnail, downloadIds)
+                monitorFacebookVideoDownloadProgress(downloadIds)
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error downloading video: ${e.message}")
             }
         }
     }
 
-    suspend fun combineVideoAndAudio(context: Context, videoFile: File, audioFile: File): String? {
-        // Get external storage directory (Downloads directory)
-        val downloadsDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        if (!downloadsDir.exists()) {
-            downloadsDir.mkdirs()  // Create the directory if it doesn't exist
+    private fun addFacebookDownloadItem(
+        title: String,
+        thumbnail: String,
+        downloadIds: List<Long>,
+    ) {
+        val newItem = FacebookDownloadItems(
+            title = title, thumbnail = thumbnail, downloadProgress = 0, downloadIds = downloadIds
+        )
+        val updatedList = _FacebookDownloadItems.value + newItem
+        _FacebookDownloadItems.value = updatedList
+
+        Log.d("TAG", "Added new download item: $newItem")
+    }
+
+    private suspend fun monitorFacebookVideoDownloadProgress(downloadIds: List<Long>) {
+        withContext(Dispatchers.IO) {
+            while (true) {
+                try {
+                    val progress = repository.getDownloadProgress(downloadIds)
+                    Log.d("TAG", "Fetched download progress for ids=$downloadIds: $progress%")
+                    updateFacebookVideoDownloadProgress(downloadIds, progress)
+                    if (progress == 100) {
+                        Log.d("TAG", "Download complete for ids=$downloadIds")
+                        break
+                    }
+                    delay(1000) // Check progress every second
+                } catch (e: Exception) {
+                    Log.e("ViewModel", "Error monitoring download progress: ${e.message}")
+                    break // Exit loop on error
+                }
+            }
+        }
+    }
+
+    private suspend fun updateFacebookVideoDownloadProgress(
+        downloadIds: List<Long>,
+        progress: Int,
+    ) {
+        val currentList = _FacebookDownloadItems.value
+        Log.d("TAG", "Current _FacebookDownloadItems: $currentList")
+
+        val updatedList = currentList.map { item ->
+            if (item.downloadIds == downloadIds) {
+                Log.d("TAG", "Updating item: $item with progress=$progress")
+                item.copy(downloadProgress = progress)
+            } else {
+                item
+            }
         }
 
-        val outputFileName = "combined_video.mp4"
-        val outputFilePath = File(downloadsDir, outputFileName).absolutePath
+        Log.d("TAG", "UpdatedList before setting _FacebookDownloadItems: $updatedList")
 
-        /*       val command = arrayOf(
-                   "-i",
-                   videoFile.absolutePath,
-                   "-i",
-                   audioFile.absolutePath,
-                   "-c:v",
-                   "libx264",  // Re-encode video to H.264
-                   "-c:a",
-                   "aac",      // Re-encode audio to AAC
-                   "-strict",
-                   "experimental",
-                   "-y",               // Overwrite output file if it exists
-                   outputFilePath
-               )*/
-        val command = arrayOf(
-            "-i",
-            videoFile.absolutePath,
-            "-i",
-            audioFile.absolutePath,
-            "-c:v", "copy",  // Copy video stream instead of re-encoding
-            "-c:a", "copy",  // Copy audio stream instead of re-encoding
-            "-strict", "experimental",
-            "-y",
-            outputFilePath
-        )
-        return withContext(Dispatchers.IO) {
-            val rc = FFmpeg.execute(command)
-
-            if (rc == 0) {
-                // Command executed successfully
-                Log.d("TAG", "Combined video and audio successfully: $outputFilePath")
-                outputFilePath
-            } else {
-                // Command failed with error
-                Log.e("TAG", "Error combining video and audio: FFmpeg returned $rc")
-                null
-            }
+        withContext(Dispatchers.Main) {
+            _FacebookDownloadItems.value = updatedList
+            Log.d(
+                "TAG",
+                "Updated _youTubeDownloadItems: ${_FacebookDownloadItems.value.map { it.downloadProgress }}"
+            )
         }
     }
 
 
     // YouTube Section
-    /*    fun fetchYouTubeVideoInfo(videoUrl: String, context: Context) {
-        _isYouTubeVideoFounded.value = true
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val getVideoInfo = python.getModule("YouTubeScraper")
-                val videoInfo = getVideoInfo.callAttr("get_url", videoUrl)
-                if (videoInfo != null) {
-                    val id = videoInfo.callAttr("get", "id")?.toString() ?: "N/A"
-                    val title = videoInfo.callAttr("get", "title")?.toString() ?: "N/A"
-                    val description = videoInfo.callAttr("get", "description")?.toString() ?: "N/A"
-                    val thumbnail = videoInfo.callAttr("get", "thumbnail")?.toString() ?: "N/A"
-                    val uploadDate = videoInfo.callAttr("get", "upload_date")?.toString() ?: "N/A"
-                    val uploader = videoInfo.callAttr("get", "uploader")?.toString() ?: "N/A"
-                    val duration = videoInfo.callAttr("get", "duration")?.toString() ?: "N/A"
-                    val viewCount = videoInfo.callAttr("get", "view_count")?.toString() ?: "N/A"
-                    val likeCount = videoInfo.callAttr("get", "like_count")?.toString() ?: "N/A"
-                    val dislikeCount = videoInfo.callAttr("get", "dislike_count")?.toString() ?: "N/A"
-
-                    // Extract audio URL
-                    val audioUrl = videoInfo.callAttr("get", "audio_url")?.toString() ?: "N/A"
-
-                    // Extract video URLs
-                    val videoUrlsPyObject = videoInfo.callAttr("get", "video_urls")
-                    val videoUrlsMap: Map<PyObject, PyObject> = videoUrlsPyObject?.asMap() ?: emptyMap()
-
-                    val videoUrls: Map<String, Map<String, String>> = videoUrlsMap.map { (key, value) ->
-                        val valueMap: Map<PyObject, PyObject> = value.asMap()
-                        val url = valueMap.entries.find { it.key.toString() == "url" }?.value?.toString() ?: "N/A"
-                        val size = valueMap.entries.find { it.key.toString() == "size" }?.value?.toString() ?: "N/A"
-                        key.toString() to mapOf(
-                            "url" to url,
-                            "size" to size
-                        )
-                    }.toMap()
-
-                    // Log the information with appropriate tags
-                    withContext(Dispatchers.Main) {
-                        Log.d("TAG", "Video ID: $id")
-                        Log.d("TAG", "Title: $title")
-                        Log.d("TAG", "Description: $description")
-                        Log.d("TAG", "Thumbnail URL: $thumbnail")
-                        Log.d("TAG", "Upload Date: $uploadDate")
-                        Log.d("TAG", "Uploader: $uploader")
-                        Log.d("TAG", "Duration: $duration")
-                        Log.d("TAG", "View Count: $viewCount")
-                        Log.d("TAG", "Like Count: $likeCount")
-                        Log.d("TAG", "Dislike Count: $dislikeCount")
-                        Log.d("TAG", "Audio URL: $audioUrl")
-
-                        videoUrls.forEach { (resolution, data) ->
-                            Log.d("TAG", "Video URL ($resolution): ${data["url"]}, Size: ${data["size"]}")
-                        }
-
-                        val video1080pUrl = videoUrls["1080p"]?.get("url")
-
-                        val videoList = videoUrls.values.map { it["url"].toString() }
-                        val audioList = listOf(audioUrl)
-                        addYouTubeDownloadItemDetails(
-                            title = title,
-                            thumbnail = thumbnail,
-                            videoList = videoUrls,
-                            audioList = audioList
-                        )
-                        _YouTubeVideoSelectedOption.value = true
-                        _isYouTubeVideoFounded.value = false
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.e("TAG", "Failed to retrieve video information")
-                        _isYouTubeVideoFounded.value = false
-                        Toast.makeText(context, "Please check the URL and try again", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Log.e("TAG", "Error fetching video information: ${e.message}")
-                    _isYouTubeVideoFounded.value = false
-                    Toast.makeText(context, "try again", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-*/
-
-
     fun fetchYouTubeVideoInfo(videoUrl: String, context: Context) {
         _isYouTubeVideoFounded.value = true
         viewModelScope.launch(Dispatchers.IO) {
