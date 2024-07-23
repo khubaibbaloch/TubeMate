@@ -79,52 +79,51 @@ fun YouTubeDownloadSection(
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "YouTube videos are downloaded with audio and video separately, then combined together",
-                modifier = Modifier.padding(8.dp),
-                textAlign = TextAlign.Center,
-                color = TubeMateThemes.colorScheme.textColor,
-                fontWeight = FontWeight.Bold
+                text = "Note: YouTube videos are downloaded with audio and video separately, then combined together",
+                modifier = Modifier.padding(top = 4.dp),
+                color = Color.Black,
+                textAlign = TextAlign.Center
             )
 
-            /*Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { selectedOption.value = "video" }
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = selectedOption.value == "video",
-                    onClick = null, // Remove the separate click handler
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = Color.Black,
-                        unselectedColor = Color.Gray
-                    )
-                )
-                Text(text = "Video", modifier = Modifier.padding(end = 8.dp))
-            }
+            /* Row(
+                 modifier = Modifier
+                     .clip(RoundedCornerShape(8.dp))
+                     .clickable { selectedOption.value = "video" }
+                     .padding(8.dp),
+                 horizontalArrangement = Arrangement.Center,
+                 verticalAlignment = Alignment.CenterVertically
+             ) {
+                 RadioButton(
+                     selected = selectedOption.value == "video",
+                     onClick = null, // Remove the separate click handler
+                     colors = RadioButtonDefaults.colors(
+                         selectedColor = Color.Black,
+                         unselectedColor = Color.Gray
+                     )
+                 )
+                 Text(text = "Video", modifier = Modifier.padding(end = 8.dp))
+             }
 
-            Spacer(modifier = Modifier.width(16.dp))
+             Spacer(modifier = Modifier.width(16.dp))
 
-            Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { selectedOption.value = "audio" }
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = selectedOption.value == "audio",
-                    onClick = null, // Remove the separate click handler
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = Color.Black,
-                        unselectedColor = Color.Gray
-                    )
-                )
-                Text(text = "Audio", modifier = Modifier.padding(end = 8.dp))
-            }*/
+             Row(
+                 modifier = Modifier
+                     .clip(RoundedCornerShape(8.dp))
+                     .clickable { selectedOption.value = "audio" }
+                     .padding(8.dp),
+                 horizontalArrangement = Arrangement.Center,
+                 verticalAlignment = Alignment.CenterVertically
+             ) {
+                 RadioButton(
+                     selected = selectedOption.value == "audio",
+                     onClick = null, // Remove the separate click handler
+                     colors = RadioButtonDefaults.colors(
+                         selectedColor = Color.Black,
+                         unselectedColor = Color.Gray
+                     )
+                 )
+                 Text(text = "Audio", modifier = Modifier.padding(end = 8.dp))
+             }*/
         }
     }
 }

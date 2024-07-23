@@ -76,45 +76,52 @@ fun FacebookDownloadSection(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { selectedOption.value = "video" }
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = selectedOption.value == "video",
-                    onClick = null, // Remove the separate click handler
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = Color.Black,
-                        unselectedColor = Color.Gray
-                    )
-                )
-                Text(text = "Video", modifier = Modifier.padding(end = 8.dp))
-            }
+            Text(
+                text = "Note: Downloading media from private accounts is not supported.",
+                modifier = Modifier.padding(top = 8.dp),
+                color = Color.Black,
+                textAlign = TextAlign.Center
+            )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            /* Row(
+                 modifier = Modifier
+                     .clip(RoundedCornerShape(8.dp))
+                     .clickable { selectedOption.value = "video" }
+                     .padding(8.dp),
+                 horizontalArrangement = Arrangement.Center,
+                 verticalAlignment = Alignment.CenterVertically
+             ) {
+                 RadioButton(
+                     selected = selectedOption.value == "video",
+                     onClick = null, // Remove the separate click handler
+                     colors = RadioButtonDefaults.colors(
+                         selectedColor = Color.Black,
+                         unselectedColor = Color.Gray
+                     )
+                 )
+                 Text(text = "Video", modifier = Modifier.padding(end = 8.dp))
+             }
 
-            Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { selectedOption.value = "audio" }
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = selectedOption.value == "audio",
-                    onClick = null, // Remove the separate click handler
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = Color.Black,
-                        unselectedColor = Color.Gray
-                    )
-                )
-                Text(text = "Audio", modifier = Modifier.padding(end = 8.dp))
-            }
+             Spacer(modifier = Modifier.width(16.dp))
+
+             Row(
+                 modifier = Modifier
+                     .clip(RoundedCornerShape(8.dp))
+                     .clickable { selectedOption.value = "audio" }
+                     .padding(8.dp),
+                 horizontalArrangement = Arrangement.Center,
+                 verticalAlignment = Alignment.CenterVertically
+             ) {
+                 RadioButton(
+                     selected = selectedOption.value == "audio",
+                     onClick = null, // Remove the separate click handler
+                     colors = RadioButtonDefaults.colors(
+                         selectedColor = Color.Black,
+                         unselectedColor = Color.Gray
+                     )
+                 )
+                 Text(text = "Audio", modifier = Modifier.padding(end = 8.dp))
+             }*/
         }
     }
 }
