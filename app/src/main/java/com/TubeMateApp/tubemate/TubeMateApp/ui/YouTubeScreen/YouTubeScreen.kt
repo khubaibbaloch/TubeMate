@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,15 +29,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import com.TubeMateApp.tubemate.R
 import com.TubeMateApp.tubemate.TubeMateApp.MainViewModel.TubeMateViewModel
-import com.TubeMateApp.tubemate.TubeMateApp.ui.InstagramScreen.common.InstagramDownloadItem
-import com.TubeMateApp.tubemate.TubeMateApp.ui.InstagramScreen.common.InstagramDownloadSection
-import com.TubeMateApp.tubemate.TubeMateApp.ui.InstagramScreen.common.InstagramDownloadStepsColumn
-import com.TubeMateApp.tubemate.TubeMateApp.ui.InstagramScreen.common.InstagramScreenTopBar
 import com.TubeMateApp.tubemate.TubeMateApp.ui.YouTubeScreen.common.YouTubeDownloadItem
 import com.TubeMateApp.tubemate.TubeMateApp.ui.YouTubeScreen.common.YouTubeDownloadSection
 import com.TubeMateApp.tubemate.TubeMateApp.ui.YouTubeScreen.common.YouTubeDownloadStepsColumn
@@ -189,5 +190,3 @@ fun handleDownloadClick(
         onSuccess() // Invoke success callback
     }
 }
-
-

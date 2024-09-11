@@ -665,18 +665,18 @@ class TubeMateViewModel @Inject constructor(
                          Log.d("TAG", "Like Count: $likeCount")
                          Log.d("TAG", "Dislike Count: $dislikeCount")*/
 
-                        /*audioUrlsList.forEachIndexed { index, audioInfo ->
+                        audioUrlsList.forEachIndexed { index, audioInfo ->
                             val audioUrl = audioInfo["url"] ?: "N/A"
                             val format = audioInfo["format"] ?: "N/A"
-                            Log.d("TAG", "Audio URL $index: Format: $format, URL: $audioUrl")
+                            Log.d("AudioURL", "Audio URL $index: Format: $format, URL: $audioUrl")
                         }
 
                         videoUrls.forEach { (resolution, data) ->
                             Log.d(
-                                "TAG",
-                                "Video URL ($resolution): ${data["url"]}, Size: ${data["size"]}"
+                                "VideoURL",
+                                "Video URL ($resolution): ${data["url"]}, Size: ${data["size"]}}"
                             )
-                        }*/
+                        }
 
                         // Update your LiveData or perform further actions
                         addYouTubeDownloadItemDetails(

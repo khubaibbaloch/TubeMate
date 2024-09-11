@@ -1,5 +1,6 @@
 package com.TubeMateApp.tubemate.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -23,6 +24,8 @@ val Facebook = Color(0xFF4267B2).copy(.2f)
 val WhatsApp = Color(0xFF25D366).copy(.2f)
 // Instagram Color
 val YouTube = Color(0xFFFF0000).copy(.2f)
+
+
 
 
 val Orange = Color(0xFFFF9149)

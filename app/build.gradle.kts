@@ -115,18 +115,18 @@ dependencies {
     implementation(libs.coil.compose)
 
     // for R8
-    implementation (libs.bctls.jdk15on)
+    /*implementation (libs.bctls.jdk15on)
     implementation (libs.conscrypt.android)
-    implementation (libs.openjsse)
+    implementation (libs.openjsse)*/
 
 
     implementation(libs.landscapist.glide)
 
 
 
-    implementation ("com.arthenica:mobile-ffmpeg-full-gpl:4.4.LTS")
+    implementation (libs.mobile.ffmpeg.full.gpl)
+    //implementation(libs.coil.compose)
 
 
-    
 
 }

@@ -38,16 +38,18 @@ def get_video_info(video_url):
 
             # Extract video URLs for each resolution from 144p to 1080p
             video_urls = {}
-            resolutions = [144, 240, 360, 480, 720, 1080]
-            for res in resolutions:
-                for fmt in info_dict.get('formats', []):
-                    if fmt.get('vcodec') != 'none' and fmt.get('acodec') == 'none':  # Video-only format
-                        height = fmt.get('height')
-                        url = fmt.get('url')
-                        file_size = fmt.get('filesize')  # File size in bytes
-                        if height == res and url and "googlevideo.com/videoplayback" in url:
-                            video_urls[f'{res}p'] = {'url': url, 'size': file_size}
-                            break
+            resolutions = [144, 240, 360, 480, 720, 1080]  # Targeted resolutions
+            for fmt in info_dict.get('formats', []):
+                if fmt.get('vcodec') != 'none' and fmt.get('acodec') == 'none':  # Video-only format
+                    height = fmt.get('height')
+                    fps = fmt.get('fps')  # Get the FPS value
+                    url = fmt.get('url')
+                    file_size = fmt.get('filesize')  # File size in bytes
+
+                    # Check that the URL is valid and file size is available
+                    if url and "googlevideo.com/videoplayback" in url and file_size:
+                        key = f'{height}p {fps}fps'
+                        video_urls[key] = {'url': url, 'size': file_size, 'fps': fps}
 
             # Add URLs to video_info
             video_info['audio_urls'] = audio_urls

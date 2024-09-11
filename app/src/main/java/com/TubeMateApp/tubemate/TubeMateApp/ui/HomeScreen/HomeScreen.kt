@@ -1,6 +1,7 @@
 package com.TubeMateApp.tubemate.TubeMateApp.ui.HomeScreen
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -37,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.TubeMateApp.tubemate.R
-import com.TubeMateApp.tubemate.TubeMateApp.navGraph.BottomNavGraph
 import com.TubeMateApp.tubemate.TubeMateApp.ui.HomeScreen.common.HomeScreenItemCard
 import com.TubeMateApp.tubemate.TubeMateApp.ui.HomeScreen.common.HomeScreenTopBar
 import com.TubeMateApp.tubemate.TubeMateApp.ui.HomeScreen.common.ShowPermissionDeniedDialog
@@ -53,6 +53,8 @@ import com.WalkMateApp.walkmate.WalkMateApp.navGraph.BottomNavScreenRoutes
 fun HomeScreen(navController: NavController) {
     val context = LocalContext.current
     var showPermissionDeniedDialog by remember { mutableStateOf(false) }
+
+
 
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -158,6 +160,7 @@ fun HomeScreen(navController: NavController) {
                     mainText = "Instagram",
                     backgroundColor = Instagram,
                     onClick = {
+
                         checkPermissionsAndNavigate(BottomNavScreenRoutes.InstagramScreen.route)
                     }
                 )
