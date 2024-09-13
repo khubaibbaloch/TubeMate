@@ -37,8 +37,16 @@ class TubeMateRepository @Inject constructor(
             val urlPairs = fileUrls.chunked(2)
             for ((videoUrl, audioUrl) in urlPairs) {
                 val uniqueId = UUID.randomUUID().toString()
-                val videoFileName = generateFileName(videoUrl, "video_${uniqueId}mp4")
                 val audioFileName = generateFileName(audioUrl, "audio_${uniqueId}mp3")
+                val videoFileName = generateFileName(videoUrl, "video_${uniqueId}mp4")
+                Log.d("VideoAudioURLs", " ")
+
+                Log.d(
+                    "TubeMateRepository",
+                    "Starting download for audio: $audioUrl with filename: $audioFileName"
+                )
+                val audioDownloadId = downloadHelper.downloadFile(audioUrl, audioFileName)
+                downloadIds.add(audioDownloadId)
 
                 Log.d(
                     "TubeMateRepository",
@@ -47,12 +55,7 @@ class TubeMateRepository @Inject constructor(
                 val videoDownloadId = downloadHelper.downloadFile(videoUrl, videoFileName)
                 downloadIds.add(videoDownloadId)
 
-                Log.d(
-                    "TubeMateRepository",
-                    "Starting download for audio: $audioUrl with filename: $audioFileName"
-                )
-                val audioDownloadId = downloadHelper.downloadFile(audioUrl, audioFileName)
-                downloadIds.add(audioDownloadId)
+
 
                 CoroutineScope(Dispatchers.IO).launch {
                     waitForDownloadsToComplete(listOf(videoDownloadId, audioDownloadId))

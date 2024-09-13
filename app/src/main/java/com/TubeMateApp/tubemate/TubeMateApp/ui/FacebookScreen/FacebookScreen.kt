@@ -113,7 +113,7 @@ fun FacebookScreen(navController: NavController, viewModel: TubeMateViewModel) {
                     )
                 }
                 if (downloadItems.isEmpty()) {
-                    YouTubeDownloadStepsColumn()
+                    FacebookDownloadStepsColumn()
                 }
 
             }

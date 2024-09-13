@@ -2,6 +2,7 @@ package com.TubeMateApp.tubemate.TubeMateApp.ui.FacebookScreen.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,10 +33,11 @@ fun FacebookDownloadStepsColumn() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Step("Step 1 how to Download video", R.drawable.ic_launcher_background)
-        Step("Step 2 how to Download video", R.drawable.ic_launcher_background)
-        Step("Step 3 how to Download video", R.drawable.ic_launcher_background)
-        Step("Step 4 how to Download video", R.drawable.ic_launcher_background)
+        Step("Step 1 how to Download video", R.drawable.facebook_step1)
+        Step("Step 2 how to Download video", R.drawable.facebook_step2)
+        Step("Step 3 how to Download video", R.drawable.facebook_step3)
+        Step("Step 4 how to Download video", R.drawable.facebook_step4)
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
@@ -49,10 +51,13 @@ fun Step(stepText: String, imageResId: Int) {
     Image(
         painter = painterResource(id = imageResId),
         contentDescription = "",
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.FillBounds,
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(600.dp)
+            .padding(horizontal = 8.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
     )
 
 }
