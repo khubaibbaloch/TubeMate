@@ -16,6 +16,7 @@ lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 mobileFfmpegFullGpl = "4.4.LTS"
+mobileFfmpegMinGpl = "4.4.LTS"
 mszProgressIndicator = "0.8.0"
 navigationRuntimeKtx = "2.7.7"
 navigationCompose = "2.7.7"
@@ -50,6 +51,7 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 landscapist-glide = { module = "com.github.skydoves:landscapist-glide", version.ref = "landscapistGlide" }
 mobile-ffmpeg-full-gpl = { module = "com.arthenica:mobile-ffmpeg-full-gpl", version.ref = "mobileFfmpegFullGpl" }
+mobile-ffmpeg-min-gpl = { module = "com.arthenica:mobile-ffmpeg-min-gpl", version.ref = "mobileFfmpegMinGpl" }
 msz-progress-indicator = { module = "com.ehsanmsz:msz-progress-indicator", version.ref = "mszProgressIndicator" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 openjsse = { module = "org.openjsse:openjsse", version.ref = "openjsse" }

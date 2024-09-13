@@ -31,7 +31,6 @@ import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.TubeMate.SharedPrefere
 import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.TubeMate.TubeMateRepository
 import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.YouTube.YouTubeDownloadItem
 import com.TubeMateApp.tubemate.TubeMateApp.helperClasses.YouTube.YouTubeDownloadItemDetails
-import com.arthenica.mobileffmpeg.FFmpeg
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform

@@ -59,3 +59,9 @@
 -dontwarn sun.net.**
 -dontwarn sun.security.**
 -dontwarn sun.util.**
+
+# Keep FFmpeg library code
+# Only keep FFmpeg executeAsync methods to shrink the library size
+-keep class com.arthenica.mobileffmpeg.FFmpeg.** { *; }
+
+

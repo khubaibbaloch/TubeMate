@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -211,7 +212,6 @@ class TubeMateRepository @Inject constructor(
             }
         }
     }
-
 
     @SuppressLint("Range")
     suspend fun getDownloadProgress(downloadIds: List<Long>): Int {

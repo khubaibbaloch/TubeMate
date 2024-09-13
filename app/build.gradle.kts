@@ -24,7 +24,6 @@ android {
         ndk {
             // On Apple silicon, you can omit x86_64.
             abiFilters += listOf("arm64-v8a","armeabi-v7a", "x86_64","x86")
-            //abiFilters += listOf("armeabi-v7a", "x86")
             version =  "3.12.4"
         }
         chaquopy {
@@ -124,7 +123,11 @@ dependencies {
 
 
 
-    implementation (libs.mobile.ffmpeg.full.gpl)
+    //implementation (libs.mobile.ffmpeg.full.gpl)
+    implementation("com.arthenica:mobile-ffmpeg-min-gpl:4.4.LTS")
+
+
+
     //implementation(libs.coil.compose)
 
 
