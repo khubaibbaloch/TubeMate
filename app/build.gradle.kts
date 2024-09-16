@@ -125,6 +125,8 @@ dependencies {
 
     //implementation (libs.mobile.ffmpeg.full.gpl)
     implementation("com.arthenica:mobile-ffmpeg-min-gpl:4.4.LTS")
+    implementation (libs.androidx.core.splashscreen)
+
 
 
 

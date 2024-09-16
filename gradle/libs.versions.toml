@@ -1,6 +1,7 @@
 [versions]
 accompanistGlide = "0.24.13-rc"
 agp = "8.6.0"
+coreSplashscreen = "1.0.1"
 bctlsJdk15on = "1.70"
 coilCompose = "2.5.0"
 conscryptAndroid = "2.5.2"
@@ -29,6 +30,7 @@ retrofit = "2.9.0"
 [libraries]
 accompanist-glide = { module = "com.google.accompanist:accompanist-glide", version.ref = "accompanistGlide" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 bctls-jdk15on = { module = "org.bouncycastle:bctls-jdk15on", version.ref = "bctlsJdk15on" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 conscrypt-android = { module = "org.conscrypt:conscrypt-android", version.ref = "conscryptAndroid" }
