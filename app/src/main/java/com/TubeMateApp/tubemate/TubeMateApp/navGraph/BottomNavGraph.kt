@@ -1,5 +1,7 @@
 package com.TubeMateApp.tubemate.TubeMateApp.navGraph
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -18,7 +20,9 @@ import com.TubeMateApp.tubemate.TubeMateApp.ui.SettingScreen.SettingScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.WhatsappScreen.WhatsAppScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.YouTubeScreen.YouTubeScreen
 import com.WalkMateApp.walkmate.WalkMateApp.navGraph.BottomNavScreenRoutes
+import com.powervpn.PowerVPNApp.PowerVPN.ui.settings.AppUpdate.AppUpdateScreen
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun BottomNavGraph(navController: NavHostController,viewModel: TubeMateViewModel){
     NavHost(navController = navController, startDestination = BottomNavScreenRoutes.HomeScreen.route,
@@ -61,6 +65,9 @@ fun BottomNavGraph(navController: NavHostController,viewModel: TubeMateViewModel
         }
         composable(BottomNavScreenRoutes.AboutUsScreen.route) {
             AboutUsScreen(navController)
+        }
+        composable(BottomNavScreenRoutes.AppUpdateScreen.route) {
+            AppUpdateScreen(navController)
         }
     }
 }

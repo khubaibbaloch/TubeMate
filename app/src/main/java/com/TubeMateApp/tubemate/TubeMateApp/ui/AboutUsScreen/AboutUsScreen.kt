@@ -95,7 +95,7 @@ fun AboutUsScreen(navController: NavController) {
                     .background(TubeMateThemes.colorScheme.textColor)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background), // Update with your actual logo resource
+                    painter = painterResource(id = R.drawable.logo_svg), // Update with your actual logo resource
                     contentDescription = null,
                     modifier = Modifier
                         .size(100.dp)

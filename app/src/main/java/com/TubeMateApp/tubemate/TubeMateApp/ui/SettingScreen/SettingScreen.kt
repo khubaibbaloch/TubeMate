@@ -124,6 +124,21 @@ fun SettingScreen(navController: NavController,viewModel: TubeMateViewModel) {
                         color = Color.Black,
                     )
                 }
+                Row(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .fillMaxWidth()
+                        .clickable {navController.navigate(BottomNavScreenRoutes.AppUpdateScreen.route)}
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Update",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                    )
+                }
             }
 
             if (isThemeClicked.value) {

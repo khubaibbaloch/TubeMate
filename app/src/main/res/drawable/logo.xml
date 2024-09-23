@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Aps>
 	<Group>
-		<Page Width="240dp" Height="240dp" PaperTray="0">
+		<Page Width="500" Height="500" PaperTray="0">
 			<Canvas>
 				<Canvas>
 					<Clip>
