@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.dagger.hilt.android")
     id("com.chaquo.python")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     kotlin("kapt")
 }
 
@@ -129,8 +131,15 @@ dependencies {
 
 
 
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
 
-    //implementation(libs.coil.compose)
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+
+    // Firebase Messaging
+    implementation("com.google.firebase:firebase-messaging")
 
 
 

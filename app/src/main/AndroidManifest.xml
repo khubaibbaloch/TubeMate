@@ -50,8 +50,7 @@
         </activity>
 
         <!-- Foreground service with appropriate service type and foreground permission -->
-        <service
-            android:name=".TubeMateApp.Service.TubeMateService"
+        <service android:name=".TubeMateApp.fcmService.MyFirebaseMessagingService"
             android:enabled="true"
             android:foregroundServiceType="dataSync"
             android:exported="false"

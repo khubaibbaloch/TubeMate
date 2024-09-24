@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758909326055",
+    "project_id": "tubemate-8f042",
+    "storage_bucket": "tubemate-8f042.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758909326055:android:2ff4aa149fb44ed74bc842",
+        "android_client_info": {
+          "package_name": "com.TubeMateApp.tubemate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdq6ZwOJV3UFCXGXbd5rLDl4W2dXeZTFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

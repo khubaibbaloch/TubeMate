@@ -4,4 +4,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     id("com.google.dagger.hilt.android") version "2.48" apply false
     id("com.chaquo.python") version "15.0.1" apply false
+    id("com.google.gms.google-services") version "4.4.2" apply false
+    id("com.android.test") version "8.5.1" apply false
+    id("com.google.firebase.crashlytics") version "3.0.2" apply false
 }
