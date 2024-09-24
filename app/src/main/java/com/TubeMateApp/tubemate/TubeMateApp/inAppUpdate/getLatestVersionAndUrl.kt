@@ -13,7 +13,8 @@ suspend fun getLatestVersionAndUrl(
     return withContext(Dispatchers.IO) {
         try {
             val url =
-                URL("https://api.github.com/repos/TheJetpackMaster/SoundScapeMusicPlayer/releases/latest")
+                URL("https://api.github.com/repos/TheJetpackMaster/TubeMateInAppUpdateApk/releases/latest")
+
             val connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = "GET"
             connection.setRequestProperty("Accept", "application/vnd.github.v3+json")
