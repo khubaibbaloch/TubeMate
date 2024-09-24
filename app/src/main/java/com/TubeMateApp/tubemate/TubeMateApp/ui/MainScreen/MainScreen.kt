@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,12 +39,15 @@ import com.TubeMateApp.tubemate.TubeMateApp.ui.HomeScreen.HomeScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.MainScreen.common.CustomBottomNav
 import com.TubeMateApp.tubemate.ui.theme.TubeMateThemes
 import com.WalkMateApp.walkmate.WalkMateApp.navGraph.BottomNavScreenRoutes
+import com.powervpn.PowerVPNApp.PowerVPN.inAppUpdate.CheckForUpdates
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModel: TubeMateViewModel) {
     val navController = rememberNavController()
 
+    CheckForUpdates()
 
     Scaffold(
         modifier = Modifier
