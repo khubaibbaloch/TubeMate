@@ -1,6 +1,10 @@
 package com.powervpn.PowerVPNApp.PowerVPN.ui.settings.AppUpdate
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -45,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.TubeMateApp.tubemate.TubeMateApp.ui.SettingScreen.common.SettingScreenTopBar
+import com.TubeMateApp.tubemate.ui.theme.SoftBlue
 import com.TubeMateApp.tubemate.ui.theme.statusBarColor
 import com.powervpn.PowerVPNApp.PowerVPN.inAppUpdate.downloadApk
 import com.powervpn.PowerVPNApp.PowerVPN.inAppUpdate.getAppVersion
@@ -141,16 +146,25 @@ fun AppUpdateScreen(navController: NavController){
                 } else if (currentVersion == latestVersion) {
                     Text(
                         text = "You have the latest version: $currentVersion",
-                        color = Color.White,
+                        color = SoftBlue,
                         fontSize = 16.sp
                     )
                 } else if (isFailedToCheckUpdates) {
-                    Text(
-                        text = "Error checking updates. Visit the link for manual updates.",
-                        textAlign = TextAlign.Center,
-                        color = Color.Red,
-                        fontSize = 14.sp
-                    )
+                    if (!isNetworkAvailable(context)) { // Check if network is available
+                        Text(
+                            text = "No internet connection, try again.",
+                            textAlign = TextAlign.Center,
+                            color = Color.Red,
+                            fontSize = 14.sp
+                        )
+                    } else {
+                        Text(
+                            text = "Error checking updates. Visit the link for manual updates.",
+                            textAlign = TextAlign.Center,
+                            color = Color.Red,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
             }
 
@@ -187,10 +201,31 @@ fun OpenLink(onClick: () -> Unit) {
             color = Color(0xFF2549A8),
             modifier = Modifier.clickable {
                 val intent =
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://app.mediafire.com/zvr02llqvcel9"))
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://app.mediafire.com/kxn1ccgdmte3f"))
                 context.startActivity(intent)
                 onClick()
             }
         )
+    }
+}
+
+
+@SuppressLint("ObsoleteSdkInt")
+fun isNetworkAvailable(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
+    } else {
+        @Suppress("DEPRECATION")
+        val networkInfo = connectivityManager.activeNetworkInfo ?: return false
+        @Suppress("DEPRECATION")
+        return networkInfo.isConnected
     }
 }

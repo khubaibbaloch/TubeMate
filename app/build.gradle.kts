@@ -124,6 +124,8 @@ dependencies {
 
     implementation(libs.landscapist.glide)
 
+    //System Ui controller
+    implementation(libs.accompanist.systemuicontroller)
 
 
     //implementation (libs.mobile.ffmpeg.full.gpl)

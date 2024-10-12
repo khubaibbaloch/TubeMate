@@ -31,3 +31,5 @@ val statusBarColor = Color.Gray.copy(.5f)
 val Orange = Color(0xFFFF9149)
 
 
+val SoftBlue = Color(0xFF2980B9) // Original Soft Blue color
+val navigationColor = Color(0xFF170909)
