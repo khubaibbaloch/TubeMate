@@ -24,7 +24,7 @@ navigationCompose = "2.7.7"
 okhttp = "4.12.0"
 openjsse = "1.1.7"
 retrofit = "2.9.0"
-
+accompanistSystemuicontroller = "0.34.0"
 
 
 [libraries]
@@ -58,6 +58,8 @@ msz-progress-indicator = { module = "com.ehsanmsz:msz-progress-indicator", versi
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 openjsse = { module = "org.openjsse:openjsse", version.ref = "openjsse" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 
 
 [plugins]

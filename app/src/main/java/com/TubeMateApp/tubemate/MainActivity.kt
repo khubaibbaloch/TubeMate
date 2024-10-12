@@ -34,17 +34,26 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: TubeMateViewModel by viewModels()
 
-    @RequiresApi(Build.VERSION_CODES.Q)
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge()
         setContent {
-          //  val currentTheme = viewModel.currentTheme.collectAsState()
+            //  val currentTheme = viewModel.currentTheme.collectAsState()
             //TubeMateThemes(currentTheme.value.toInt(), this@MainActivity) {
             TubeMateThemes(2, this@MainActivity) {
+
+
                 val navController = rememberNavController()
-                RootNavGraph(navController = navController, viewModel = viewModel)
+                val notificationData = intent?.getStringExtra("update") ?: ""
+
+                RootNavGraph(
+                    navController = navController, viewModel = viewModel,
+                    notificationData = notificationData
+                )
+
                 checkPermissionAndRequest(navController, this@MainActivity)
                 // "context" must be an Activity, Service or Application object from your app.
                 /* if (! Python.isStarted()) {

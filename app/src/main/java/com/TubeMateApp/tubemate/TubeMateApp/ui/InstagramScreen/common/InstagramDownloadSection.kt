@@ -39,8 +39,8 @@ fun InstagramDownloadSection(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp) // Increased height to accommodate radio buttons
-            .padding(16.dp)
+            .height(290.dp) // Increased height to accommodate radio buttons
+            .padding(12.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(Instagram), // Instagram color
         verticalArrangement = Arrangement.Top,
@@ -68,18 +68,28 @@ fun InstagramDownloadSection(
             )
         }
 
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Note: Downloading media from private accounts is not supported.",
                 modifier = Modifier.padding(top = 8.dp),
                 color = Color.Black,
                 textAlign = TextAlign.Center
+            )
+
+            Spacer(Modifier.height(6.dp))
+
+            Text(
+                text = "Note: Instagram section is under development, you may experience errors & issues.",
+                modifier = Modifier.padding(top = 8.dp),
+                color = Color(0xFFF30505),
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Normal
             )
 
            /* Row(

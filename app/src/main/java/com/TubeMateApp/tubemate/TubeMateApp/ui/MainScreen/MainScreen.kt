@@ -38,34 +38,69 @@ import com.TubeMateApp.tubemate.TubeMateApp.ui.HistoryScreen.HistoryScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.HomeScreen.HomeScreen
 import com.TubeMateApp.tubemate.TubeMateApp.ui.MainScreen.common.CustomBottomNav
 import com.TubeMateApp.tubemate.ui.theme.TubeMateThemes
+import com.TubeMateApp.tubemate.ui.theme.navigationColor
 import com.WalkMateApp.walkmate.WalkMateApp.navGraph.BottomNavScreenRoutes
+import com.WalkMateApp.walkmate.WalkMateApp.navGraph.ScreenRoutes
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.powervpn.PowerVPNApp.PowerVPN.inAppUpdate.CheckForUpdates
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: TubeMateViewModel) {
+fun MainScreen(
+    viewModel: TubeMateViewModel,
+    notificationData: String
+) {
+
+
     val navController = rememberNavController()
+
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = Color.Transparent,
+        darkIcons = true
+    )
+
+    systemUiController.setNavigationBarColor(
+        color = Color.Transparent,
+        darkIcons = true
+    )
+
+    LaunchedEffect(notificationData) {
+        if (notificationData == "update") {
+            navController.navigate(BottomNavScreenRoutes.AppUpdateScreen.route)
+        }
+    }
 
     CheckForUpdates()
 
     Scaffold(
         modifier = Modifier
+            .background(Color.Gray)
             .navigationBarsPadding(),
         bottomBar = {
-           if (shouldShowBottomBar(navController)) {
+            if (shouldShowBottomBar(navController)) {
                 CustomBottomNav(navController = navController)
             }
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(bottom = padding.calculateBottomPadding()).fillMaxSize()) {
-            BottomNavGraph(navController = navController,viewModel=viewModel)
+        Column(
+            modifier = Modifier
+                .padding(bottom = padding.calculateBottomPadding())
+                .fillMaxSize()
+        ) {
+            BottomNavGraph(navController = navController, viewModel = viewModel)
         }
     }
 }
+
 @Composable
 fun shouldShowBottomBar(navController: NavController): Boolean {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    return currentRoute in listOf(BottomNavScreenRoutes.HomeScreen.route, BottomNavScreenRoutes.HistoryScreen.route)
+    return currentRoute in listOf(
+        BottomNavScreenRoutes.HomeScreen.route,
+        BottomNavScreenRoutes.HistoryScreen.route
+    )
 }

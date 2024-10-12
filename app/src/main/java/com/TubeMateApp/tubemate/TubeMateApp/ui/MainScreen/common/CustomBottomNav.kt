@@ -45,48 +45,63 @@ fun CustomBottomNav(
         modifier = Modifier
             .shadow(1.dp)
             .fillMaxWidth()
-            .height(52.dp)
-         ,
+            .height(52.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
 
 
-        Column(modifier = Modifier
-            .padding(top = 3.dp)
-            .weight(1f)
-            .fillMaxHeight()
-            .clickable(onClick = {
-                if (currentDestination != BottomNavScreenRoutes.HomeScreen.route ) {
-                    navController.navigate(BottomNavScreenRoutes.HomeScreen.route)
-                }
-            }),
+        Column(
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .weight(1f)
+                .fillMaxHeight()
+                .background(
+                    if (currentDestination == BottomNavScreenRoutes.HomeScreen.route) Color.Black.copy(
+                        .1f
+                    ) else Color.Transparent
+                )
+                .clickable(onClick = {
+                    if (currentDestination != BottomNavScreenRoutes.HomeScreen.route) {
+                        navController.navigate(BottomNavScreenRoutes.HomeScreen.route)
+                    }
+                }),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             /*Image(
                 painter = painterResource(id = if (currentDestination == BottomNavScreenRoutes.HomeScreen.route) R.drawable.home_fill_icon else R.drawable.home_outline_icon),
                 contentDescription = "adsasd",
                 modifier = Modifier.size(24.dp)
             )*/Icon(
-                imageVector = Icons.Default.Home,
-                contentDescription = "songs home button",
-                modifier = Modifier.size(24.dp),
-                tint = if (currentDestination == BottomNavScreenRoutes.HomeScreen.route) Color.Black.copy(.5f) else Color.Black,
-            )
+            imageVector = Icons.Default.Home,
+            contentDescription = "songs home button",
+            modifier = Modifier.size(24.dp),
+            tint = if (currentDestination == BottomNavScreenRoutes.HomeScreen.route) Color.Black else Color.Black.copy(
+                .5f
+            ),
+        )
         }
 
 
-        Column(modifier = Modifier
-            .padding(top = 3.dp)
-            .weight(1f)
-            .fillMaxHeight()
-            .clickable(onClick = {
-                if (currentDestination != BottomNavScreenRoutes.HistoryScreen.route ) {
-                    navController.navigate(BottomNavScreenRoutes.HistoryScreen.route)
-                }
-            }),
+        Column(
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .weight(1f)
+                .fillMaxHeight()
+                .background(
+                    if (currentDestination == BottomNavScreenRoutes.HistoryScreen.route) Color.Black.copy(
+                        .1f
+                    ) else Color.Transparent
+                )
+                .clickable(onClick = {
+                    if (currentDestination != BottomNavScreenRoutes.HistoryScreen.route) {
+                        navController.navigate(BottomNavScreenRoutes.HistoryScreen.route)
+                    }
+                }),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             /*Image(
                 painter = painterResource(id = if (currentDestination == BottomNavScreenRoutes.HistoryScreen.route) R.drawable.history_fill_icon else R.drawable.history_outline_icon),
                 contentDescription = "adsasd",
@@ -96,7 +111,9 @@ fun CustomBottomNav(
                 painter = painterResource(id = R.drawable.history),
                 contentDescription = "songs home button",
                 modifier = Modifier.size(24.dp),
-                tint = if (currentDestination == BottomNavScreenRoutes.HistoryScreen.route) Color.Black.copy(.5f) else Color.Black,
+                tint = if (currentDestination == BottomNavScreenRoutes.HistoryScreen.route) Color.Black else Color.Black.copy(
+                    .5f
+                ),
             )
         }
     }
