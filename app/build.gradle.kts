@@ -17,7 +17,7 @@ android {
         minSdk = 21
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -30,15 +30,16 @@ android {
         }
         chaquopy {
             defaultConfig {
-                buildPython("C:/Program Files/Python312/python.exe")
+                buildPython("C:/Users/parve/AppData/Local//Programs//Python/Python312/python.exe")
                 sourceSets {
                     getByName("main") {
                         srcDir("src/main/python")
                     }
                 }
+
                 pip{
                     install("yt-dlp")
-                    install("instaloader")
+                    install("instaloader==4.13.1")  // Update the version number as needed
                 }
             }
 
