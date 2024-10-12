@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.TubeMateApp.tubemate" />
+                  <option name="mobileSdkAppId" value="1:758909326055:android:2ff4aa149fb44ed74bc842" />
+                  <option name="projectId" value="tubemate-8f042" />
+                  <option name="projectNumber" value="758909326055" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
